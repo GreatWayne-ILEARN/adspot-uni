@@ -4,8 +4,8 @@
   "version": "1.1.0",
   "scripts": {
     "typecheck": "pnpm -r run typecheck",
-    "build": "pnpm --filter @workspace/api-server run build && pnpm --filter @workspace/adspot-unified run build",
-    "start": "PORT=${PORT:-3001} STATIC_DIR=./app/dist node server/dist/index.mjs",
+    "build": "node api.js && pnpm --filter @workspace/api-server run build && pnpm --filter @workspace/adspot-unified run build",
+    "start": "node api.js && PORT=${PORT:-3001} STATIC_DIR=./app/dist node server/dist/index.mjs",
     "dev:api": "cross-env PORT=3001 pnpm --filter @workspace/api-server run dev",
     "dev:app": "pnpm --filter @workspace/adspot-unified run dev",
     "preview": "pnpm --filter @workspace/adspot-unified run preview",
