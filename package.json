@@ -1,0 +1,21 @@
+{
+  "name": "adspot-unified-workspace",
+  "private": true,
+  "version": "1.1.0",
+  "scripts": {
+    "typecheck": "pnpm -r run typecheck",
+    "build": "pnpm --filter @workspace/api-server run build && pnpm --filter @workspace/adspot-unified run build",
+    "start": "PORT=${PORT:-3001} STATIC_DIR=./app/dist node server/dist/index.mjs",
+    "dev:api": "cross-env PORT=3001 pnpm --filter @workspace/api-server run dev",
+    "dev:app": "pnpm --filter @workspace/adspot-unified run dev",
+    "preview": "pnpm --filter @workspace/adspot-unified run preview",
+    "test": "pnpm -r --if-present run test",
+    "lint": "pnpm -r --if-present run lint"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}

@@ -1,0 +1,44 @@
+import { Switch, Route } from "wouter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TooltipProvider } from "@earn/components/ui/tooltip";
+import { Toaster } from "@earn/components/ui/toaster";
+
+import Landing from "@landing/pages/Landing";
+import NotFound from "@landing/pages/not-found";
+import { SectionErrorBoundary } from "./components/SectionErrorBoundary";
+import { EarnSection } from "@earn/section";
+import { BrandSection } from "@brands/section";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false, refetchOnWindowFocus: false },
+  },
+});
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Switch>
+          {/* Landing is the single entry point. Its buttons route in-app. */}
+          <Route path="/">
+            <SectionErrorBoundary section="landing"><Landing /></SectionErrorBoundary>
+          </Route>
+
+          {/* "Start Earning" — reviewer platform (adspot-web) */}
+          <Route path="/earn" nest>
+            <SectionErrorBoundary section="earn"><EarnSection /></SectionErrorBoundary>
+          </Route>
+
+          {/* "For Brands" — brand platform (adspot-brand) */}
+          <Route path="/brands" nest>
+            <SectionErrorBoundary section="brands"><BrandSection /></SectionErrorBoundary>
+          </Route>
+
+          <Route component={NotFound} />
+        </Switch>
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
